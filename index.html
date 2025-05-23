@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>МЯУ</title>
+  <title>ELO</title>
   <style>
     body {
       margin: 0;
@@ -12,49 +12,55 @@
       width: 100vw;
     }
 
-    #gif {
+    .gif {
       position: absolute;
       width: 600px;
       height: 500px;
       object-fit: contain;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
 
-  <img id="gif" src="https://i.ibb.co/LhC1njYc/5x30-5-Min-Day-workout-1-gif.gif" alt="Moving GIF">
-
-  <audio autoplay loop>
-    <source src="https://files.catbox.moe/rq4o10.mp3" type="audio/mpeg">
-    Ваш браузер не поддерживает аудио.
-  </audio>
-
   <script>
-    const gif = document.getElementById('gif');
-    let x = 100, y = 100;
-    let dx = 2, dy = 2;
+    const gifUrl = "https://i.ibb.co/LhC1njYc/5x30-5-Min-Day-workout-1-gif.gif";
 
-    function move() {
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-      const gifWidth = gif.offsetWidth;
-      const gifHeight = gif.offsetHeight;
+    function createMovingGif() {
+      const gif = document.createElement("img");
+      gif.src = gifUrl;
+      gif.className = "gif";
+      document.body.appendChild(gif);
 
-      if (x + dx + gifWidth > screenWidth || x + dx < 0) dx *= -1;
-      if (y + dy + gifHeight > screenHeight || y + dy < 0) dy *= -1;
+      let x = Math.random() * (window.innerWidth - 600);
+      let y = Math.random() * (window.innerHeight - 500);
+      let dx = (Math.random() > 0.5 ? 1 : -1) * (1 + Math.random() * 2);
+      let dy = (Math.random() > 0.5 ? 1 : -1) * (1 + Math.random() * 2);
 
-      x += dx;
-      y += dy;
+      function move() {
+        const w = 600, h = 500;
 
-      gif.style.left = x + 'px';
-      gif.style.top = y + 'px';
+        if (x + dx + w > window.innerWidth || x + dx < 0) dx = -dx;
+        if (y + dy + h > window.innerHeight || y + dy < 0) dy = -dy;
 
-      requestAnimationFrame(move);
+        x += dx;
+        y += dy;
+
+        gif.style.left = x + 'px';
+        gif.style.top = y + 'px';
+
+        requestAnimationFrame(move);
+      }
+
+      move();
     }
 
-    move();
+    // Первая гифка сразу
+    createMovingGif();
+
+    // Новая гифка каждую секунду
+    setInterval(createMovingGif, 1000);
   </script>
 
 </body>
 </html>
-
