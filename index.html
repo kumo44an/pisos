@@ -1,1 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>МЯУ</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    #gif {
+      position: absolute;
+      width: 600px;
+      height: 500px;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+
+  <img id="gif" src="https://i.ibb.co/LhC1njYc/5x30-5-Min-Day-workout-1-gif.gif" alt="Moving GIF">
+
+  <audio autoplay loop>
+    <source src="https://files.catbox.moe/rq4o10.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает аудио.
+  </audio>
+
+  <script>
+    const gif = document.getElementById('gif');
+    let x = 100, y = 100;
+    let dx = 2, dy = 2;
+
+    function move() {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const gifWidth = gif.offsetWidth;
+      const gifHeight = gif.offsetHeight;
+
+      if (x + dx + gifWidth > screenWidth || x + dx < 0) dx *= -1;
+      if (y + dy + gifHeight > screenHeight || y + dy < 0) dy *= -1;
+
+      x += dx;
+      y += dy;
+
+      gif.style.left = x + 'px';
+      gif.style.top = y + 'px';
+
+      requestAnimationFrame(move);
+    }
+
+    move();
+  </script>
+
+</body>
+</html>
 
